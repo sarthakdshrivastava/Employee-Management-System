@@ -61,11 +61,16 @@ public class EmployeeServiceImpl implements IEmployeeService {
 				}
 				emp.setDateOfJoining(d);
 			}
-				emp.setName(value);
-			if(key.equals("name"))
-				emp.setName(value);
-			
+			if(key.equals("address"))
+				emp.setAddress(value);;
+			if(key.equals("departmentId"))
+				emp.setDepartmentId(Integer.parseInt(value));
+			if(key.equals("projectId"))
+				emp.setProjectId(Integer.parseInt(value));
+			if(key.equals("roleId"))
+				emp.setRoleId(Integer.parseInt(value));
 		}
+		employeeDao.modifyEmployee(Long.parseLong(id), emp);
 	}
 
 	@Override

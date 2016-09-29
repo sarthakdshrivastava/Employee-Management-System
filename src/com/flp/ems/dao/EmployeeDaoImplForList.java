@@ -16,7 +16,14 @@ public class EmployeeDaoImplForList implements IEmployeeDao {
 	}
 	@Override
 	public void modifyEmployee(long id, Employee employee) {
-		
+		Employee found=null;
+		for(Employee e:employeeList){
+			if(e.getId()==id){
+				found=e;
+			}
+		}
+		employeeList.remove(found);
+		employeeList.add(employee);
 	}
 	@Override
 	public void removeEmployee(long id) {
