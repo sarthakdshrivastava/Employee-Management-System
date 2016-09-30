@@ -17,6 +17,10 @@ public class Employee implements Cloneable {
 	static{
 		uid=1;
 	}
+	public Employee(){
+		name="";
+		emailId="";
+	}
 	public Employee(String name,long phoneNumber,Date dateOfBirth,Date dateOfJoining,String address,int departmentId,int roleId,int projectId){
 		this.name=name;
 		this.phoneNumber=phoneNumber;

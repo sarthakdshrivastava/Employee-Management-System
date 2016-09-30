@@ -11,7 +11,8 @@ public class CompareByEmailId implements Comparator<Employee> {
 	}
 	@Override
 	public int compare(Employee o1, Employee o2) {
-		if(o2.getEmailId().equals(emailId))
+//		System.out.println(o1.getName()+" "+o2.getName());
+		if(o1.getEmailId().equals(emailId))
 			return 1;
 		else
 			return 0;

@@ -12,7 +12,8 @@ public class CompareById implements Comparator<Employee>{
 	@Override
 	public int compare(Employee o1, Employee o2) {
 		// TODO Auto-generated method stub
-		if(o2.getId()==id)
+		//System.out.println(o1.getName()+" "+o2.getName());
+		if(o1.getId()==id)
 			return 1;
 		else
 			return 0;

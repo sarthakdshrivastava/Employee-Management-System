@@ -7,6 +7,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.flp.ems.comparator.CompareByEmailId;
+import com.flp.ems.comparator.CompareById;
+import com.flp.ems.comparator.CompareByName;
 import com.flp.ems.domain.Employee;
 
 public class EmployeeDaoImplForList implements IEmployeeDao {
@@ -49,11 +52,11 @@ public class EmployeeDaoImplForList implements IEmployeeDao {
 	@Override
 	public List<Employee> searchEmployee(Map<String,String> map) {
 		List<Employee> foundEmployees=new ArrayList<Employee>();
+		Employee dummy=new Employee();
+		foundEmployees.add(dummy);
+		foundEmployees.addAll(employeeList);
 		Set<Entry<String,String>> entrySet=map.entrySet();
 		TreeSet treeSet;
-
-		for(Employee employee:employeeList){
-			boolean found=true;
 			for(Entry entry:entrySet){
 				String key=(String) entry.getKey();
 				String value=(String) entry.getValue();
@@ -63,8 +66,10 @@ public class EmployeeDaoImplForList implements IEmployeeDao {
 							break;
 						}
 						else{
-							if(!value.equals(employee.getName()))
-								found=false;
+							treeSet=new TreeSet<Employee>(new CompareByName(value));
+							treeSet.addAll(foundEmployees);
+							foundEmployees.clear();
+							foundEmployees.addAll(treeSet);
 						}
 						break;
 					case "id":
@@ -72,8 +77,11 @@ public class EmployeeDaoImplForList implements IEmployeeDao {
 							break;
 						}
 						else{
-							if(!value.equals(employee.getId()+""))
-								found=false;
+							treeSet=new TreeSet<Employee>(new CompareById(Long.parseLong(value)));
+							treeSet.addAll(foundEmployees);
+							System.out.println(treeSet.size());
+							foundEmployees.clear();
+							foundEmployees.addAll(treeSet);
 						}
 						break;
 					case "emailId":
@@ -81,15 +89,15 @@ public class EmployeeDaoImplForList implements IEmployeeDao {
 							break;
 						}
 						else{
-							if(!value.equals(employee.getEmailId()))
-								found=false;
+							treeSet=new TreeSet<Employee>(new CompareByEmailId(value));
+							treeSet.addAll(foundEmployees);
+							foundEmployees.clear();
+							foundEmployees.addAll(treeSet);
 						}
 						break;
 				}
 			}
-			if(found)
-				foundEmployees.add(employee);
-		}
+		foundEmployees.remove(dummy);	
 		return foundEmployees;
 	}
 	
