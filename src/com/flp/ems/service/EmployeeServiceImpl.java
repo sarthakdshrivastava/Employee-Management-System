@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -18,18 +19,31 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employeeDao=new EmployeeDaoImplForList();
 	}
 	@Override
-	public String searchEmployee(String id) {
-		return null;
+	public String searchEmployee(Map<String,String> map) {
+		List<Employee> searchList=employeeDao.searchEmployee(map);
+		if(searchList.size()==0)
+			return "No employee found";
+		String ret="Total employees found:"+searchList.size();
+		for(Employee emp:searchList){
+			ret=ret+"\n"+emp.toString();
+		}
+		return ret;
 	}
 
 	@Override
-	public void removeEmployee(String id) {
-		
+	public boolean removeEmployee(String id) {
+		boolean code=employeeDao.removeEmployee(Long.parseLong(id));
+		return code;
 	}
 
 	@Override
-	public void modifyEmployee(String id, HashMap<String, String> map) {
-		Employee emp=employeeDao.searchEmployee(Long.parseLong(id));
+	public boolean modifyEmployee(String id, HashMap<String, String> map) {
+		Map<String,String> sendMap=new HashMap<String,String>();
+		sendMap.put("id", id);
+		List<Employee> empList=employeeDao.searchEmployee(sendMap);
+		if(empList.size()==0)
+			return false;
+		Employee emp=empList.get(0);
 		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy");
 		Set<Entry<String,String>> entrySet=map.entrySet();
 		for(Entry entry:entrySet){
@@ -70,7 +84,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			if(key.equals("roleId"))
 				emp.setRoleId(Integer.parseInt(value));
 		}
-		employeeDao.modifyEmployee(Long.parseLong(id), emp);
+		employeeDao.modifyEmployee(emp);
+		return true;
 	}
 
 	@Override
@@ -84,7 +99,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public void addEmployee(HashMap<String, String> map){
+	public void addEmployee(Map<String, String> map){
 		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy");
 		String name=map.get("name");
 		long phoneNumber=Long.parseLong(map.get("phoneNumber"));

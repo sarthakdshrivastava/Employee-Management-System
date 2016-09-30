@@ -92,13 +92,35 @@ public class UserInteraction {
 		map.put("departmentId", departmentId);
 		map.put("projectId",projectId);
 		map.put("roleId",roleId);
-		employeeService.modifyEmployee(id, map);
+		boolean errorCode=employeeService.modifyEmployee(id, map);
+		if(errorCode)
+			System.out.println("Employee not found");
+		else
+			System.out.println("Employee modified Successfully");
 	}
 	public void removeEmployee(){
-		
+		System.out.println("Enter the employee id to remove:");
+		String input=reader.nextLine().trim();
+		boolean code=employeeService.removeEmployee(input);
+		if(code)
+			System.out.println("Employee removed successfully");
+		else
+			System.out.println("Employee not found");
 	}
 	public void searchEmployee(){
-		
+		System.out.println("Enter value to search by the field.If you do not wish to search by the field, just press enter");
+		System.out.println("Enter employee id to search:");
+		String id=reader.nextLine().trim();
+		System.out.println("Enter name to search" );
+		String name=reader.nextLine().trim();
+		System.out.println("Enter email id to search");
+		String emailId=reader.nextLine().trim();
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("id", id);
+		map.put("name", name);
+		map.put("emailId", emailId);
+		String result=employeeService.searchEmployee(map);
+		System.out.println(result);
 	}
 	public void getAllEmployee(){
 		System.out.println(employeeService.getAllEmployee());

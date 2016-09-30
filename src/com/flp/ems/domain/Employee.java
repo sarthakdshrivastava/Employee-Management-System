@@ -28,7 +28,7 @@ public class Employee implements Cloneable {
 		this.projectId=projectId;
 		this.id=uid;
 		uid++;
-		this.emailId="";
+		this.emailId=name+this.id+"@barclaycard.co.uk";
 	}
 	@Override
 	public String toString(){
