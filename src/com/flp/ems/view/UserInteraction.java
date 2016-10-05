@@ -93,7 +93,7 @@ public class UserInteraction {
 		map.put("projectId",projectId);
 		map.put("roleId",roleId);
 		boolean errorCode=employeeService.modifyEmployee(id, map);
-		if(errorCode)
+		if(!errorCode)
 			System.out.println("Employee not found");
 		else
 			System.out.println("Employee modified Successfully");

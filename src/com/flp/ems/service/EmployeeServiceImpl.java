@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.flp.ems.dao.EmployeeDaoImplForDB;
 import com.flp.ems.dao.EmployeeDaoImplForList;
 import com.flp.ems.dao.IEmployeeDao;
 import com.flp.ems.domain.Employee;
@@ -16,7 +17,7 @@ import com.flp.ems.domain.Employee;
 public class EmployeeServiceImpl implements IEmployeeService {
 	private IEmployeeDao employeeDao;
 	public EmployeeServiceImpl(){
-		employeeDao=new EmployeeDaoImplForList();
+		employeeDao=new EmployeeDaoImplForDB();
 	}
 	@Override
 	public String searchEmployee(Map<String,String> map) {
